@@ -1,0 +1,9 @@
+mutation RemoveReminder($id: String!) {
+    removeReminder(reminder: { id: $id }) {
+        success
+        errors {
+            path
+            message
+        }
+    }
+}

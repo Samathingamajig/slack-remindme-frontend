@@ -1,0 +1,8 @@
+query MyReminders {
+    myReminders {
+        id
+        creatorId
+        permalink
+        postAt
+    }
+}

@@ -1,0 +1,14 @@
+mutation UpdateReminder($id: String!, $postAt: Int!) {
+    updateReminder(reminder: { id: $id, postAt: $postAt }) {
+        reminder {
+            id
+            creatorId
+            permalink
+            postAt
+        }
+        errors {
+            path
+            message
+        }
+    }
+}
