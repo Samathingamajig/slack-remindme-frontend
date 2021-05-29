@@ -1,8 +1,9 @@
 query AllReminders {
     allReminders {
         id
-        creatorId
         permalink
         postAt
+        authorName
+        channelName
     }
 }

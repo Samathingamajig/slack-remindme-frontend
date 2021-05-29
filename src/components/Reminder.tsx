@@ -5,11 +5,23 @@ interface ReminderProps {
     id: string;
     permalink: string;
     postAt: number;
+    authorName: string;
+    channelName: string;
     removeReminder: (uuid: string) => void;
 }
 
-const Reminder: React.FC<ReminderProps> = ({ id, permalink, postAt, removeReminder }) => {
-    const [removeSelf] = useRemoveReminderMutation({ onCompleted: () => removeReminder(id), variables: { id } });
+const Reminder: React.FC<ReminderProps> = ({ id, permalink, postAt, authorName, channelName, removeReminder }) => {
+    const [removeSelf] = useRemoveReminderMutation({
+        onCompleted: ({ removeReminder: { success, errors } }) => {
+            if (success) {
+                removeReminder(id);
+                return;
+            }
+            errors?.forEach((err) => console.error(err));
+        },
+        variables: { id },
+        onError: (err) => console.error(err),
+    });
 
     return (
         <div style={{ margin: '.5rem', border: '2px solid black' }}>
@@ -22,7 +34,11 @@ const Reminder: React.FC<ReminderProps> = ({ id, permalink, postAt, removeRemind
                 </a>
             </span>
             <br />
-            <strong>postAt:</strong>&nbsp;<span>{String(new Date(postAt * 1000))}</span>
+            <strong>postAt:</strong>&nbsp;<span>{new Date(postAt * 1000).toLocaleString()}</span>
+            <br />
+            <strong>author:</strong>&nbsp;<span>{authorName}</span>
+            <br />
+            <strong>channel:</strong>&nbsp;<span>&#35;{channelName}</span>
             <br />
             <button onClick={() => removeSelf()}>delete</button>
         </div>

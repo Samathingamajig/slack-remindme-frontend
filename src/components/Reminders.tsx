@@ -24,9 +24,7 @@ const Reminders: React.FC = () => {
                 </div>
             )}
             {data &&
-                reminders.map(({ id, permalink, postAt }, i) => (
-                    <Reminder {...{ id, permalink, postAt, removeReminder }} key={id} />
-                ))}
+                reminders.map((reminder, i) => <Reminder {...{ removeReminder, ...reminder }} key={reminder.id} />)}
         </>
     );
 };

@@ -60,9 +60,10 @@ export type Query = {
 export type Reminder = {
   __typename?: 'Reminder';
   id: Scalars['String'];
-  creatorId: Scalars['String'];
   permalink: Scalars['String'];
   postAt: Scalars['Int'];
+  authorName: Scalars['String'];
+  channelName: Scalars['String'];
 };
 
 export type ReminderDeletionInput = {
@@ -92,7 +93,7 @@ export type AllRemindersQuery = (
   { __typename?: 'Query' }
   & { allReminders: Array<(
     { __typename?: 'Reminder' }
-    & Pick<Reminder, 'id' | 'creatorId' | 'permalink' | 'postAt'>
+    & Pick<Reminder, 'id' | 'permalink' | 'postAt' | 'authorName' | 'channelName'>
   )> }
 );
 
@@ -132,7 +133,7 @@ export type MyRemindersQuery = (
   { __typename?: 'Query' }
   & { myReminders: Array<(
     { __typename?: 'Reminder' }
-    & Pick<Reminder, 'id' | 'creatorId' | 'permalink' | 'postAt'>
+    & Pick<Reminder, 'id' | 'permalink' | 'postAt' | 'authorName' | 'channelName'>
   )> }
 );
 
@@ -165,7 +166,7 @@ export type UpdateReminderMutation = (
     { __typename?: 'ReminderResponse' }
     & { reminder?: Maybe<(
       { __typename?: 'Reminder' }
-      & Pick<Reminder, 'id' | 'creatorId' | 'permalink' | 'postAt'>
+      & Pick<Reminder, 'id' | 'permalink' | 'postAt' | 'authorName' | 'channelName'>
     )>, errors?: Maybe<Array<(
       { __typename?: 'FieldError' }
       & Pick<FieldError, 'path' | 'message'>
@@ -178,9 +179,10 @@ export const AllRemindersDocument = gql`
     query AllReminders {
   allReminders {
     id
-    creatorId
     permalink
     postAt
+    authorName
+    channelName
   }
 }
     `;
@@ -310,9 +312,10 @@ export const MyRemindersDocument = gql`
     query MyReminders {
   myReminders {
     id
-    creatorId
     permalink
     postAt
+    authorName
+    channelName
   }
 }
     `;
@@ -385,9 +388,10 @@ export const UpdateReminderDocument = gql`
   updateReminder(reminder: {id: $id, postAt: $postAt}) {
     reminder {
       id
-      creatorId
       permalink
       postAt
+      authorName
+      channelName
     }
     errors {
       path
