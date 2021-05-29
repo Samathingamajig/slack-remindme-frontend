@@ -86,17 +86,6 @@ export type UserResponse = {
   slackId?: Maybe<Scalars['String']>;
 };
 
-export type AllRemindersQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AllRemindersQuery = (
-  { __typename?: 'Query' }
-  & { allReminders: Array<(
-    { __typename?: 'Reminder' }
-    & Pick<Reminder, 'id' | 'permalink' | 'postAt' | 'authorName' | 'channelName'>
-  )> }
-);
-
 export type LoginMutationVariables = Exact<{
   slackId: Scalars['String'];
 }>;
@@ -175,44 +164,6 @@ export type UpdateReminderMutation = (
 );
 
 
-export const AllRemindersDocument = gql`
-    query AllReminders {
-  allReminders {
-    id
-    permalink
-    postAt
-    authorName
-    channelName
-  }
-}
-    `;
-
-/**
- * __useAllRemindersQuery__
- *
- * To run a query within a React component, call `useAllRemindersQuery` and pass it any options that fit your needs.
- * When your component renders, `useAllRemindersQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useAllRemindersQuery({
- *   variables: {
- *   },
- * });
- */
-export function useAllRemindersQuery(baseOptions?: Apollo.QueryHookOptions<AllRemindersQuery, AllRemindersQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AllRemindersQuery, AllRemindersQueryVariables>(AllRemindersDocument, options);
-      }
-export function useAllRemindersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllRemindersQuery, AllRemindersQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AllRemindersQuery, AllRemindersQueryVariables>(AllRemindersDocument, options);
-        }
-export type AllRemindersQueryHookResult = ReturnType<typeof useAllRemindersQuery>;
-export type AllRemindersLazyQueryHookResult = ReturnType<typeof useAllRemindersLazyQuery>;
-export type AllRemindersQueryResult = Apollo.QueryResult<AllRemindersQuery, AllRemindersQueryVariables>;
 export const LoginDocument = gql`
     mutation Login($slackId: String!) {
   login(slackId: $slackId)

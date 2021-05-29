@@ -1,9 +1,0 @@
-query AllReminders {
-    allReminders {
-        id
-        permalink
-        postAt
-        authorName
-        channelName
-    }
-}
