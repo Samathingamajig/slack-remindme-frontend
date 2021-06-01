@@ -4,7 +4,7 @@ import SlackLoginButton from '../components/SlackLoginButton';
 import { useLoginMutation, useMeQuery } from '../generated/graphql';
 
 const SlackLogin: React.FC = () => {
-    console.log('SlackLogin rendered');
+    // console.log('SlackLogin rendered');
 
     const { data: meData, loading: meLoading } = useMeQuery({ fetchPolicy: 'no-cache' });
 

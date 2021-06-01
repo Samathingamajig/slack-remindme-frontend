@@ -4,7 +4,7 @@ import SlackLoginButton from '../components/SlackLoginButton';
 import { useMeQuery } from '../generated/graphql';
 
 const LoginPage: React.FC = () => {
-    console.log('LoginPage rendered');
+    // console.log('LoginPage rendered');
 
     const { data: meData, loading: meLoading, error: meError } = useMeQuery();
 

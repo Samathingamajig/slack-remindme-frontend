@@ -6,7 +6,7 @@ import { useMeQuery } from '../generated/graphql';
 
 const RemindMe: React.FC = () => {
     const { data: meData, loading: meLoading, error: meError } = useMeQuery({ fetchPolicy: 'no-cache' });
-    console.log('RemindMe rendered');
+    // console.log('RemindMe rendered');
 
     if (meLoading) return <h3>Loading authentication</h3>;
     if (meError || meData === undefined) {
