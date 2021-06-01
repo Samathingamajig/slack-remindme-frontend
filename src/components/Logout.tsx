@@ -1,8 +1,18 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 import { useLogoutMutation } from '../generated/graphql';
 
 const Logout: React.FC = () => {
-    const [logout, response] = useLogoutMutation();
+    const history = useHistory();
+    const [logout, response] = useLogoutMutation({
+        onCompleted: (res) => {
+            console.log({ res });
+            if (res.logout) {
+                console.log('pushing to /login via logout');
+                history.push('/login');
+            }
+        },
+    });
 
     return (
         <div>

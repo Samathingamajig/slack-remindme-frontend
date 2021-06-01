@@ -1,3 +1,3 @@
-mutation Login($slackId: String!) {
-    login(slackId: $slackId)
+mutation Login($slackCode: String!) {
+    login(slackCode: $slackCode)
 }

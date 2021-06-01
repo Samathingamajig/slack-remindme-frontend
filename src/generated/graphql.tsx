@@ -37,7 +37,7 @@ export type Mutation = {
 
 
 export type MutationLoginArgs = {
-  slackId: Scalars['String'];
+  slackCode: Scalars['String'];
 };
 
 
@@ -53,7 +53,6 @@ export type MutationRemoveReminderArgs = {
 export type Query = {
   __typename?: 'Query';
   me: UserResponse;
-  allReminders: Array<Reminder>;
   myReminders: Array<Reminder>;
 };
 
@@ -87,7 +86,7 @@ export type UserResponse = {
 };
 
 export type LoginMutationVariables = Exact<{
-  slackId: Scalars['String'];
+  slackCode: Scalars['String'];
 }>;
 
 
@@ -165,8 +164,8 @@ export type UpdateReminderMutation = (
 
 
 export const LoginDocument = gql`
-    mutation Login($slackId: String!) {
-  login(slackId: $slackId)
+    mutation Login($slackCode: String!) {
+  login(slackCode: $slackCode)
 }
     `;
 export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
@@ -184,7 +183,7 @@ export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutati
  * @example
  * const [loginMutation, { data, loading, error }] = useLoginMutation({
  *   variables: {
- *      slackId: // value for 'slackId'
+ *      slackCode: // value for 'slackCode'
  *   },
  * });
  */
