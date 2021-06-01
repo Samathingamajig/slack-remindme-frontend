@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 import { useRemoveReminderMutation } from '../generated/graphql';
 
 interface ReminderProps {
@@ -11,6 +12,7 @@ interface ReminderProps {
 }
 
 const Reminder: React.FC<ReminderProps> = ({ id, permalink, postAt, authorName, channelName, removeReminder }) => {
+    const history = useHistory();
     const [removeSelf] = useRemoveReminderMutation({
         onCompleted: ({ removeReminder: { success, errors } }) => {
             if (success) {
@@ -20,7 +22,10 @@ const Reminder: React.FC<ReminderProps> = ({ id, permalink, postAt, authorName, 
             errors?.forEach((err) => console.error(err));
         },
         variables: { id },
-        onError: (err) => console.error(err),
+        onError: (err) => {
+            if (err?.message === 'not authenticated') history.push('/login');
+            console.error(err);
+        },
     });
 
     return (
