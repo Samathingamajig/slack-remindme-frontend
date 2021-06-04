@@ -1,9 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import './App.css';
-import LoginPage from './pages/LoginPage';
 import RemindMe from './pages/RemindMe';
+import LoginPage from './pages/LoginPage';
 import SlackLogin from './pages/SlackLogin';
+import './App.css';
+import 'antd/dist/antd.css';
 
 const App: React.FC = () => {
     return (

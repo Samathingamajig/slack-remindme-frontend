@@ -1,17 +1,44 @@
 import React, { useState } from 'react';
 import { useRemoveReminderMutation } from '../generated/graphql';
+import { Button, Popconfirm } from 'antd';
+import { useHistory } from 'react-router';
 
-const RemoveReminder: React.FC = () => {
-    const [removeReminder, response] = useRemoveReminderMutation();
-    const [id, setId] = useState<string>('');
+const RemoveReminder: React.FC<{
+    reminderId: string;
+    removeReminder: (uuid: string) => void;
+}> = ({ reminderId, removeReminder }) => {
+    const history = useHistory();
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [removeSelf] = useRemoveReminderMutation({
+        onCompleted: ({ removeReminder: { success, errors } }) => {
+            setIsLoading(false);
+            if (success) {
+                removeReminder(reminderId);
+                return;
+            }
+            errors?.forEach((err) => console.error(err));
+        },
+        variables: { id: reminderId },
+        onError: (err) => {
+            if (err?.message === 'not authenticated') history.push('/login');
+            console.error(err);
+        },
+    });
 
     return (
-        <>
-            <span>id</span>
-            <input type="text" value={id} onChange={(e) => setId(e.target.value)} />
-            <button onClick={() => removeReminder({ variables: { id } })}>remove</button>
-            <pre>{JSON.stringify(response.data, null, 4)}</pre>
-        </>
+        <Popconfirm
+            title={'Are you sure?'}
+            onConfirm={() => {
+                setIsLoading(true);
+                removeSelf();
+            }}
+            okText="Yes"
+            placement="topLeft"
+        >
+            <Button type="primary" danger loading={isLoading}>
+                delete
+            </Button>
+        </Popconfirm>
     );
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import { useHistory } from 'react-router';
-import { useRemoveReminderMutation } from '../generated/graphql';
+import RemoveReminder from './RemoveReminder';
+import RescheduleReminder from './RescheduleReminder';
 
 interface ReminderProps {
     id: string;
@@ -12,22 +12,6 @@ interface ReminderProps {
 }
 
 const Reminder: React.FC<ReminderProps> = ({ id, permalink, postAt, authorName, channelName, removeReminder }) => {
-    const history = useHistory();
-    const [removeSelf] = useRemoveReminderMutation({
-        onCompleted: ({ removeReminder: { success, errors } }) => {
-            if (success) {
-                removeReminder(id);
-                return;
-            }
-            errors?.forEach((err) => console.error(err));
-        },
-        variables: { id },
-        onError: (err) => {
-            if (err?.message === 'not authenticated') history.push('/login');
-            console.error(err);
-        },
-    });
-
     return (
         <div style={{ margin: '.5rem', border: '2px solid black' }}>
             <strong>id:</strong>&nbsp;<span>{id}</span>
@@ -40,12 +24,13 @@ const Reminder: React.FC<ReminderProps> = ({ id, permalink, postAt, authorName, 
             </span>
             <br />
             <strong>postAt:</strong>&nbsp;<span>{new Date(postAt * 1000).toLocaleString()}</span>
+            <RescheduleReminder reminderId={id} postAt={postAt} />
             <br />
             <strong>author:</strong>&nbsp;<span>{authorName}</span>
             <br />
             <strong>channel:</strong>&nbsp;<span>&#35;{channelName}</span>
             <br />
-            <button onClick={() => removeSelf()}>delete</button>
+            <RemoveReminder reminderId={id} removeReminder={removeReminder} />
         </div>
     );
 };
