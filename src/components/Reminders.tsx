@@ -3,7 +3,8 @@ import Reminder from './Reminder';
 import { useMyRemindersQuery, Reminder as ReminderResult } from '../generated/graphql';
 import { useHistory } from 'react-router';
 import toLoginPageIfAuthError from '../functions/toLoginPageIfAuthError';
-import { Button } from 'antd';
+import { Button, Space } from 'antd';
+import RemoveMyExpiredReminders from './RemoveMyExpiredReminders';
 
 const Reminders: React.FC = () => {
     const history = useHistory();
@@ -25,23 +26,31 @@ const Reminders: React.FC = () => {
         setReminders((prev) => prev.filter(({ id }) => uuid !== id));
     };
 
+    const removeReminders = (uuids: Set<string>) => {
+        setReminders((prev) => prev.filter(({ id }) => !uuids.has(id)));
+    };
+
     return (
         <>
-            <Button
-                onClick={() => {
-                    setIsLoading(true);
-                    refetch()
-                        .catch((err) => {
-                            toLoginPageIfAuthError(err, history);
-                            console.error(err);
-                        })
-                        .finally(() => setIsLoading(false));
-                }}
-                type="primary"
-                loading={isLoading}
-            >
-                refetch myReminders
-            </Button>
+            <Space>
+                <Button
+                    onClick={() => {
+                        setIsLoading(true);
+                        refetch()
+                            .catch((err) => {
+                                toLoginPageIfAuthError(err, history);
+                                console.error(err);
+                            })
+                            .finally(() => setIsLoading(false));
+                    }}
+                    type="primary"
+                    loading={isLoading}
+                >
+                    refetch myReminders
+                </Button>
+                <RemoveMyExpiredReminders removeReminders={removeReminders} />
+            </Space>
+            <br />
             {loading && <p>loading...</p>}
             {error && (
                 <div>

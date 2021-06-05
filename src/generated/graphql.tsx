@@ -33,6 +33,7 @@ export type Mutation = {
   removeFinished: Scalars['Float'];
   updateReminder: ReminderResponse;
   removeReminder: BooleanResponse;
+  removeMyExpiredReminders: ReminderIdsResponse;
 };
 
 
@@ -68,6 +69,12 @@ export type Reminder = {
 
 export type ReminderDeletionInput = {
   id: Scalars['String'];
+};
+
+export type ReminderIdsResponse = {
+  __typename?: 'ReminderIdsResponse';
+  reminderIds?: Maybe<Array<Scalars['String']>>;
+  errors?: Maybe<Array<FieldError>>;
 };
 
 export type ReminderResponse = {
@@ -124,6 +131,21 @@ export type MyRemindersQuery = (
     { __typename?: 'Reminder' }
     & Pick<Reminder, 'id' | 'permalink' | 'postAt' | 'authorName' | 'channelName' | 'messageContent'>
   )> }
+);
+
+export type RemoveMyExpiredRemindersMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type RemoveMyExpiredRemindersMutation = (
+  { __typename?: 'Mutation' }
+  & { removeMyExpiredReminders: (
+    { __typename?: 'ReminderIdsResponse' }
+    & Pick<ReminderIdsResponse, 'reminderIds'>
+    & { errors?: Maybe<Array<(
+      { __typename?: 'FieldError' }
+      & Pick<FieldError, 'path' | 'message'>
+    )>> }
+  ) }
 );
 
 export type RemoveReminderMutationVariables = Exact<{
@@ -298,6 +320,42 @@ export function useMyRemindersLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type MyRemindersQueryHookResult = ReturnType<typeof useMyRemindersQuery>;
 export type MyRemindersLazyQueryHookResult = ReturnType<typeof useMyRemindersLazyQuery>;
 export type MyRemindersQueryResult = Apollo.QueryResult<MyRemindersQuery, MyRemindersQueryVariables>;
+export const RemoveMyExpiredRemindersDocument = gql`
+    mutation RemoveMyExpiredReminders {
+  removeMyExpiredReminders {
+    reminderIds
+    errors {
+      path
+      message
+    }
+  }
+}
+    `;
+export type RemoveMyExpiredRemindersMutationFn = Apollo.MutationFunction<RemoveMyExpiredRemindersMutation, RemoveMyExpiredRemindersMutationVariables>;
+
+/**
+ * __useRemoveMyExpiredRemindersMutation__
+ *
+ * To run a mutation, you first call `useRemoveMyExpiredRemindersMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveMyExpiredRemindersMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeMyExpiredRemindersMutation, { data, loading, error }] = useRemoveMyExpiredRemindersMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useRemoveMyExpiredRemindersMutation(baseOptions?: Apollo.MutationHookOptions<RemoveMyExpiredRemindersMutation, RemoveMyExpiredRemindersMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RemoveMyExpiredRemindersMutation, RemoveMyExpiredRemindersMutationVariables>(RemoveMyExpiredRemindersDocument, options);
+      }
+export type RemoveMyExpiredRemindersMutationHookResult = ReturnType<typeof useRemoveMyExpiredRemindersMutation>;
+export type RemoveMyExpiredRemindersMutationResult = Apollo.MutationResult<RemoveMyExpiredRemindersMutation>;
+export type RemoveMyExpiredRemindersMutationOptions = Apollo.BaseMutationOptions<RemoveMyExpiredRemindersMutation, RemoveMyExpiredRemindersMutationVariables>;
 export const RemoveReminderDocument = gql`
     mutation RemoveReminder($id: String!) {
   removeReminder(reminder: {id: $id}) {

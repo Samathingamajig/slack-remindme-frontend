@@ -1,0 +1,9 @@
+mutation RemoveMyExpiredReminders {
+    removeMyExpiredReminders {
+        reminderIds
+        errors {
+            path
+            message
+        }
+    }
+}
