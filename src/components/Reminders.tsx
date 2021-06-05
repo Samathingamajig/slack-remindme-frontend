@@ -3,6 +3,7 @@ import Reminder from './Reminder';
 import { useMyRemindersQuery, Reminder as ReminderResult } from '../generated/graphql';
 import { useHistory } from 'react-router';
 import toLoginPageIfAuthError from '../functions/toLoginPageIfAuthError';
+import { Button } from 'antd';
 
 const Reminders: React.FC = () => {
     const history = useHistory();
@@ -13,6 +14,7 @@ const Reminders: React.FC = () => {
         },
     });
     const [reminders, setReminders] = useState<ReminderResult[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     useEffect(() => {
         if (!data) return;
@@ -25,16 +27,21 @@ const Reminders: React.FC = () => {
 
     return (
         <>
-            <button
-                onClick={() =>
-                    refetch().catch((err) => {
-                        toLoginPageIfAuthError(err, history);
-                        console.error(err);
-                    })
-                }
+            <Button
+                onClick={() => {
+                    setIsLoading(true);
+                    refetch()
+                        .catch((err) => {
+                            toLoginPageIfAuthError(err, history);
+                            console.error(err);
+                        })
+                        .finally(() => setIsLoading(false));
+                }}
+                type="primary"
+                loading={isLoading}
             >
                 refetch myReminders
-            </button>
+            </Button>
             {loading && <p>loading...</p>}
             {error && (
                 <div>
