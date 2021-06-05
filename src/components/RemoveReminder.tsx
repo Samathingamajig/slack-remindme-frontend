@@ -21,6 +21,7 @@ const RemoveReminder: React.FC<{
         },
         variables: { id: reminderId },
         onError: (err) => {
+            setIsLoading(false);
             toLoginPageIfAuthError(err, history);
             console.error(err);
         },
