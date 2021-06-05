@@ -25,7 +25,16 @@ const Reminders: React.FC = () => {
 
     return (
         <>
-            <button onClick={() => refetch()}>refetch myReminders</button>
+            <button
+                onClick={() =>
+                    refetch().catch((err) => {
+                        toLoginPageIfAuthError(err, history);
+                        console.error(err);
+                    })
+                }
+            >
+                refetch myReminders
+            </button>
             {loading && <p>loading...</p>}
             {error && (
                 <div>
