@@ -1,3 +1,4 @@
+import { Button } from 'antd';
 import React from 'react';
 import { useHistory } from 'react-router';
 import { useLogoutMutation } from '../generated/graphql';
@@ -16,7 +17,9 @@ const Logout: React.FC = () => {
 
     return (
         <div>
-            <button onClick={() => logout()}>logout</button>
+            <Button danger onClick={() => logout()}>
+                logout
+            </Button>
             <span>{JSON.stringify(response.data)}</span>
         </div>
     );
