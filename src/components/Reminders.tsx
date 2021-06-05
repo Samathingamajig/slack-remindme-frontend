@@ -2,10 +2,16 @@ import React, { useEffect, useState } from 'react';
 import Reminder from './Reminder';
 import { useMyRemindersQuery, Reminder as ReminderResult } from '../generated/graphql';
 import { useHistory } from 'react-router';
+import toLoginPageIfAuthError from '../functions/toLoginPageIfAuthError';
 
 const Reminders: React.FC = () => {
     const history = useHistory();
-    const { data, loading, error, refetch } = useMyRemindersQuery();
+    const { data, loading, error, refetch } = useMyRemindersQuery({
+        onError: (err) => {
+            toLoginPageIfAuthError(err, history);
+            console.error(err);
+        },
+    });
     const [reminders, setReminders] = useState<ReminderResult[]>([]);
 
     useEffect(() => {
@@ -13,9 +19,6 @@ const Reminders: React.FC = () => {
         setReminders(data.myReminders);
     }, [data]);
 
-    useEffect(() => {
-        if (error?.message === 'not authenticated') history.push('/login');
-    }, [error, history]);
     const removeReminder = (uuid: string) => {
         setReminders((prev) => prev.filter(({ id }) => uuid !== id));
     };

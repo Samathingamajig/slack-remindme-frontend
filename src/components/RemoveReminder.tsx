@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useRemoveReminderMutation } from '../generated/graphql';
 import { Button, Popconfirm } from 'antd';
 import { useHistory } from 'react-router';
+import toLoginPageIfAuthError from '../functions/toLoginPageIfAuthError';
 
 const RemoveReminder: React.FC<{
     reminderId: string;
@@ -20,7 +21,7 @@ const RemoveReminder: React.FC<{
         },
         variables: { id: reminderId },
         onError: (err) => {
-            if (err?.message === 'not authenticated') history.push('/login');
+            toLoginPageIfAuthError(err, history);
             console.error(err);
         },
     });

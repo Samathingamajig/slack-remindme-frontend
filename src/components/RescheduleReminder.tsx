@@ -4,8 +4,8 @@ import useModal from '../hooks/useModal';
 import moment, { Moment, unix } from 'moment';
 import Modal from 'antd/lib/modal/Modal';
 import { useUpdateReminderMutation } from '../generated/graphql';
-
-(window as any).moment = moment;
+import { useHistory } from 'react-router';
+import toLoginPageIfAuthError from '../functions/toLoginPageIfAuthError';
 
 const RescheduleReminder: React.FC<{
     reminderId: string;
@@ -16,7 +16,13 @@ const RescheduleReminder: React.FC<{
     const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const { isOpen, open, close } = useModal();
-    const [updateReminder] = useUpdateReminderMutation();
+    const history = useHistory();
+    const [updateReminder] = useUpdateReminderMutation({
+        onError: (err) => {
+            toLoginPageIfAuthError(err, history);
+            console.error(err);
+        },
+    });
 
     const onChangeDate = (tDate: Moment | null, _tDateString: string) => {
         setDate(tDate);
@@ -62,16 +68,12 @@ const RescheduleReminder: React.FC<{
                                     variables: { id: reminderId, postAt: date!.unix() },
                                 });
                                 setIsLoading(false);
-                                if (response.errors || response.data?.updateReminder.errors) {
-                                    let errors: any[] = [];
-                                    if (response.errors) errors = [...errors, ...response.errors];
-                                    if (response.data?.updateReminder.errors)
-                                        errors = [...errors, ...response.data?.updateReminder.errors];
+                                if (response.data?.updateReminder.errors) {
                                     notification.open({
                                         type: 'error',
                                         placement: 'bottomRight',
                                         message: 'An error occurred while rescheduling',
-                                        description: JSON.stringify(errors),
+                                        description: JSON.stringify(response.data?.updateReminder.errors),
                                     });
                                     return;
                                 }
