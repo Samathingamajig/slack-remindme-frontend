@@ -8,10 +8,19 @@ interface ReminderProps {
     postAt: number;
     authorName: string;
     channelName: string;
+    messageContent: string;
     removeReminder: (uuid: string) => void;
 }
 
-const Reminder: React.FC<ReminderProps> = ({ id, permalink, postAt, authorName, channelName, removeReminder }) => {
+const Reminder: React.FC<ReminderProps> = ({
+    id,
+    permalink,
+    postAt,
+    authorName,
+    channelName,
+    messageContent,
+    removeReminder,
+}) => {
     return (
         <div style={{ margin: '.5rem', border: '2px solid black' }}>
             <strong>id:</strong>&nbsp;<span>{id}</span>
@@ -29,6 +38,8 @@ const Reminder: React.FC<ReminderProps> = ({ id, permalink, postAt, authorName, 
             <strong>author:</strong>&nbsp;<span>{authorName}</span>
             <br />
             <strong>channel:</strong>&nbsp;<span>&#35;{channelName}</span>
+            <br />
+            <strong>messageContent:</strong>&nbsp;<span>{messageContent}</span>
             <br />
             <RemoveReminder reminderId={id} removeReminder={removeReminder} />
         </div>

@@ -63,6 +63,7 @@ export type Reminder = {
   postAt: Scalars['Int'];
   authorName: Scalars['String'];
   channelName: Scalars['String'];
+  messageContent: Scalars['String'];
 };
 
 export type ReminderDeletionInput = {
@@ -121,7 +122,7 @@ export type MyRemindersQuery = (
   { __typename?: 'Query' }
   & { myReminders: Array<(
     { __typename?: 'Reminder' }
-    & Pick<Reminder, 'id' | 'permalink' | 'postAt' | 'authorName' | 'channelName'>
+    & Pick<Reminder, 'id' | 'permalink' | 'postAt' | 'authorName' | 'channelName' | 'messageContent'>
   )> }
 );
 
@@ -154,7 +155,7 @@ export type UpdateReminderMutation = (
     { __typename?: 'ReminderResponse' }
     & { reminder?: Maybe<(
       { __typename?: 'Reminder' }
-      & Pick<Reminder, 'id' | 'permalink' | 'postAt' | 'authorName' | 'channelName'>
+      & Pick<Reminder, 'id' | 'permalink' | 'postAt' | 'authorName' | 'channelName' | 'messageContent'>
     )>, errors?: Maybe<Array<(
       { __typename?: 'FieldError' }
       & Pick<FieldError, 'path' | 'message'>
@@ -266,6 +267,7 @@ export const MyRemindersDocument = gql`
     postAt
     authorName
     channelName
+    messageContent
   }
 }
     `;
@@ -342,6 +344,7 @@ export const UpdateReminderDocument = gql`
       postAt
       authorName
       channelName
+      messageContent
     }
     errors {
       path

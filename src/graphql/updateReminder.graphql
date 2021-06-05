@@ -6,6 +6,7 @@ mutation UpdateReminder($id: String!, $postAt: Int!) {
             postAt
             authorName
             channelName
+            messageContent
         }
         errors {
             path
