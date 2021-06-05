@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 import toLoginPageIfAuthError from '../functions/toLoginPageIfAuthError';
 import { useRemoveMyExpiredRemindersMutation } from '../generated/graphql';
 
-const RemoveMyExpiredReminders: React.FC<{
+const RemoveMyExpiredRemindersButton: React.FC<{
     removeReminders: (uuids: Set<string>) => void;
 }> = ({ removeReminders }) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -38,4 +38,4 @@ const RemoveMyExpiredReminders: React.FC<{
     );
 };
 
-export default RemoveMyExpiredReminders;
+export default RemoveMyExpiredRemindersButton;

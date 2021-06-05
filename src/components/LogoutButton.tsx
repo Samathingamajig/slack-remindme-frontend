@@ -3,7 +3,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import { useLogoutMutation } from '../generated/graphql';
 
-const Logout: React.FC = () => {
+const LogoutButton: React.FC = () => {
     const history = useHistory();
     const [logout, response] = useLogoutMutation({
         onCompleted: (res) => {
@@ -25,4 +25,4 @@ const Logout: React.FC = () => {
     );
 };
 
-export default Logout;
+export default LogoutButton;

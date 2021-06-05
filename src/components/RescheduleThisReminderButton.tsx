@@ -7,7 +7,7 @@ import { useUpdateReminderMutation } from '../generated/graphql';
 import { useHistory } from 'react-router';
 import toLoginPageIfAuthError from '../functions/toLoginPageIfAuthError';
 
-const RescheduleReminder: React.FC<{
+const RescheduleThisReminderButton: React.FC<{
     reminderId: string;
     postAt: number;
 }> = ({ reminderId, postAt }) => {
@@ -117,4 +117,4 @@ const RescheduleReminder: React.FC<{
     );
 };
 
-export default RescheduleReminder;
+export default RescheduleThisReminderButton;

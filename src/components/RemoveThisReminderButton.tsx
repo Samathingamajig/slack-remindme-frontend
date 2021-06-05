@@ -4,7 +4,7 @@ import { Button, Popconfirm } from 'antd';
 import { useHistory } from 'react-router';
 import toLoginPageIfAuthError from '../functions/toLoginPageIfAuthError';
 
-const RemoveReminder: React.FC<{
+const RemoveThisReminderButton: React.FC<{
     reminderId: string;
     removeReminder: (uuid: string) => void;
 }> = ({ reminderId, removeReminder }) => {
@@ -44,4 +44,4 @@ const RemoveReminder: React.FC<{
     );
 };
 
-export default RemoveReminder;
+export default RemoveThisReminderButton;

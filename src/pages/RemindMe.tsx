@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router';
-import Logout from '../components/Logout';
+import LogoutButton from '../components/LogoutButton';
 import Reminders from '../components/Reminders';
 import { useMeQuery } from '../generated/graphql';
 
@@ -25,7 +25,7 @@ const RemindMe: React.FC = () => {
 
     return (
         <>
-            <Logout />
+            <LogoutButton />
             <hr />
             <Reminders />
         </>

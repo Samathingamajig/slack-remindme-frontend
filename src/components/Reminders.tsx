@@ -4,7 +4,7 @@ import { useMyRemindersQuery, Reminder as ReminderResult } from '../generated/gr
 import { useHistory } from 'react-router';
 import toLoginPageIfAuthError from '../functions/toLoginPageIfAuthError';
 import { Button, Space } from 'antd';
-import RemoveMyExpiredReminders from './RemoveMyExpiredReminders';
+import RemoveMyExpiredRemindersButton from './RemoveMyExpiredRemindersButton';
 
 const Reminders: React.FC = () => {
     const history = useHistory();
@@ -48,7 +48,7 @@ const Reminders: React.FC = () => {
                 >
                     refetch myReminders
                 </Button>
-                <RemoveMyExpiredReminders removeReminders={removeReminders} />
+                <RemoveMyExpiredRemindersButton removeReminders={removeReminders} />
             </Space>
             <br />
             {loading && <p>loading...</p>}

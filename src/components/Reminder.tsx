@@ -1,6 +1,6 @@
 import React from 'react';
-import RemoveReminder from './RemoveReminder';
-import RescheduleReminder from './RescheduleReminder';
+import RemoveThisReminderButton from './RemoveThisReminderButton';
+import RescheduleThisReminderButton from './RescheduleThisReminderButton';
 
 interface ReminderProps {
     id: string;
@@ -33,7 +33,7 @@ const Reminder: React.FC<ReminderProps> = ({
             </span>
             <br />
             <strong>postAt:</strong>&nbsp;<span>{new Date(postAt * 1000).toLocaleString()}</span>
-            <RescheduleReminder reminderId={id} postAt={postAt} />
+            <RescheduleThisReminderButton reminderId={id} postAt={postAt} />
             <br />
             <strong>author:</strong>&nbsp;<span>{authorName}</span>
             <br />
@@ -41,7 +41,7 @@ const Reminder: React.FC<ReminderProps> = ({
             <br />
             <strong>messageContent:</strong>&nbsp;<span>{messageContent}</span>
             <br />
-            <RemoveReminder reminderId={id} removeReminder={removeReminder} />
+            <RemoveThisReminderButton reminderId={id} removeReminder={removeReminder} />
         </div>
     );
 };
