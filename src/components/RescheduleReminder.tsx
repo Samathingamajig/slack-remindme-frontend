@@ -65,7 +65,7 @@ const RescheduleReminder: React.FC<{
                             onConfirm={async () => {
                                 setIsLoading(true);
                                 const response = await updateReminder({
-                                    variables: { id: reminderId, postAt: date!.unix() },
+                                    variables: { id: reminderId, postAt: date!.seconds(0).unix() },
                                 });
                                 setIsLoading(false);
                                 if (response.data?.updateReminder.errors) {
